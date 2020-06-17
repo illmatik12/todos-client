@@ -1,4 +1,7 @@
 # todos-client
+npm install vue-cli -g
+
+vue init webpack todos-client 
 
 ## Project setup
 ```
