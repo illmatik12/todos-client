@@ -44,32 +44,49 @@ export default {
   name: "TodoPage",
   data() {
     return {
-      todos: [
-        {
-          name: "청소"
-        },
-        {
-          name: "블로그 쓰기"
-        },
-        {
-          name: "밥먹기"
-        },
-        {
-          name: "안녕"
-        }
-      ]
-    };
+      name:null,
+      todos: [],
+    }
   },
   methods: {
     deleteTodo(i) {
-      this.todos.splice(i, 1);
+      if (i != null) {
+            var target_name
+            console.log(this.todos[i].name)
+            target_name = this.todos[i].name
+            this.$http.defaults.headers.post['Contents-Type'] = 'application/json';
+            this.$http.post('http://localhost:5000/delitem', { name : target_name 
+        }).then((result) => {
+            console.log(result.data)
+            // this.todos.push( {name : name});
+            this.todos.splice(i, 1);
+        })
+      }
     },
     createTodo(name) {
+      console.log(name)
       if (name != null) {
-        this.todos.push({ name: name });
-        this.name = null;
+            this.$http.defaults.headers.post['Contents-Type'] = 'application/json';
+            this.$http.post('http://localhost:5000/additem', { name : name 
+        }).then((result) => {
+            console.log(result.data)
+            this.todos.push( {name : name});
+        })
+        this.name = null
       }
+    },
+    getTodos(){
+      // var vm = this;
+      this.$http.get('http://127.0.0.1:5000/todos')
+      .then((result) => {
+        console.log(result.data);
+        this.todos = result.data;
+        // console.log(this.todos)
+      })
     }
+  },
+  mounted(){
+    this.getTodos();
   }
 };
 </script>

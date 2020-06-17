@@ -3,6 +3,9 @@ npm install vue-cli -g
 
 vue init webpack todos-client 
 
+npm install --save axios 
+npm install --save cors
+
 ## Project setup
 ```
 npm install
